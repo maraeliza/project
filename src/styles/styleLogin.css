@@ -172,7 +172,7 @@
 }
 
 .login-form .login-button:hover {
-  background: #C0D8D8;
+  background: rgb(22, 105, 105);
 }
 
 .login-container .signup-prompt {
@@ -190,6 +190,12 @@
 
 .login-container a:hover {
   text-decoration: underline;
+}
+
+.login-form .login-button:disabled {
+  background: #CCC;
+  color: #666666;
+  cursor: not-allowed;
 }
 
 
