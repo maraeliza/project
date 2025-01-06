@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-
 import CustomInput from "../components/inputs/CustomInput.jsx";
 import InputPassword from "../components/inputs/InputPassword.jsx";
 import InputVerified from "../components/inputs/InputVerifiedField.jsx";
 
 import MaskedInput from "../components/inputs/InputMask.jsx";
+import Swal from 'sweetalert2';
 
 import isValidCPF from "../utils/validarCpf.jsx";
 import isValidCNPJ from "../utils/validarCnpj.jsx";
@@ -58,8 +58,33 @@ const ScreenRegister = () => {
         console.log(response)
         if (response.status == 201) {
           console.log('Usuário registrado com sucesso.');
-          window.location.href = '#/login';
-        } 
+          Swal.fire({
+            title: 'Usuário registrado com sucesso',
+            text: 'Deseja logar?',
+            icon: 'success',
+            showCancelButton: true,
+            confirmButtonText: 'Sim, acessar sistema',
+            cancelButtonText: 'Não, cancelar',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = '#/login';
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              
+            }
+          });
+          
+        } else{
+          var erro = await response.json();
+          console.log('Falha ao registrar usuário.', )
+          
+
+          Swal.fire({
+            title: 'Erro ao registrar o usuário',
+            text: erro.message,
+            icon: 'error', // Tipos: 'success', 'error', 'warning', 'info', 'question'
+            confirmButtonText: 'OK',
+          });
+        }
       } catch (error) {
         console.error('Erro ao enviar dados para a API:', error);
       }
